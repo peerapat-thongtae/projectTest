@@ -8,7 +8,17 @@
     {{csrf_field()}}
     
    
-
+    <div class="form-group">
+            
+            <label for="province">จังหวัด</label>
+            
+                <select class="form-control" name="province" id="province">
+                        @foreach($provinces as $province)
+                    <option value="{{$province->province_id}}">{{$province->province_name}}</option>
+                    @endforeach
+                </select>
+                
+    </div>
     <div class="form-group">
         <label for="district_name">อำเภอ</label>
         

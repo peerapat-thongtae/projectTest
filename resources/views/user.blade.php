@@ -2,9 +2,14 @@
 @section('content')
 
 <div class="container">
+        <div class="inline">
         @if (Auth::check())
-    <a href="{{ url('user/create') }}"><button class="btn btn-warning">Add User</button></a> <br />
+        
+    <a href="{{ url('user/create') }}"><button class="btn btn-primary">Add User</button></a> 
+    <a href="{{Url('user')}}"><button type="submit" class="btn btn-primary ml-2">ดูทั้งหมด</button></a>
+
         @endif
+        </div>
     <!--<input type="text" id="search" placeholder="  live search"></input>  -->        
     <form action="{{ url('user/search') }}" method="post">
         @csrf 
@@ -36,12 +41,15 @@
         </span>
     @enderror
     </div>
-    <button type="submit" class="btn btn-warning ml-2">ค้นหา</button>
+    <button type="submit" class="btn btn-primary ml-2">ค้นหา</button>
+    
 </div>
     
     </form>
+
     <br /><br />
 
+<br /><br />
 @if(!$users->isEmpty())
 <table id="table" class="table table-bordered text-center">
 <thead class="thead-dark text-center">
@@ -81,19 +89,5 @@
 
 
 </div>
-
-<script>
-
-    $("#search").keyup(function() {
-        var value = this.value.toLowerCase();
-    
-        $("table").find("tr").each(function(index) {
-            if (index === 0) return;
-            var id = $(this).find("td").text().toLowerCase();
-            $(this).toggle(id.indexOf(value) !== -1);
-        });
-    });
-    
-    </script>
 
 @endsection

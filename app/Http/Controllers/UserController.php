@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\District;
+use App\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -12,15 +14,20 @@ class UserController extends Controller
     public function index()
     {
         $users  = User::All();
-        return view('user',compact('users'));
+        $provinces = Province::All();
+        return view('user',compact('users','provinces'));
     }
 
    public function create() {
-       return view('user.createUser');
+       $provinces = Province::All();
+       $districts = District::All();
+       return view('user.createUser',compact('provinces','districts'));
    }
 
    public function store(Request $request)
     {
+        $province = Province::select('province_name')->Where('province_id',$request->get('province'))->first();
+        $district = District::select('district_name')->Where('district_id',$request->get('district'))->first();
         $users =  new User([
             'firstname' => $request->get('firstname'),
             'surname' => $request->get('surname'),
@@ -28,7 +35,7 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'address' => $request->get('address'),
             'district' => $request->get('district'),
-            'province' => $request->get('province'),
+            'province' => $province->province_name,
             'zipcode' => $request->get('zipcode'),
             'password' => Hash::make($request->get('password')),
             

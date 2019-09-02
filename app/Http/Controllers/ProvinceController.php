@@ -8,9 +8,9 @@ class ProvinceController extends Controller
 {
     public function index()
     {
-        $province  = Province::All();
+        $provinces  = Province::All();
 
-        return response()->json($province);
+        return view('province.province',compact('provinces'));
     }
 
     public function create() {
@@ -22,6 +22,6 @@ class ProvinceController extends Controller
             'province_name' => $request->get('province_name'),
         ]);
         $province->save();
-        return redirect('/user');
+        return redirect('/province');
     }
 }

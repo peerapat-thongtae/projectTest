@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,7 +14,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('firstname') }}</label>
+                            <label for="firstname" class="col-md-4 col-form-label text-md-right">ชื่อ</label>
 
                             <div class="col-md-6">
                                 <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}" required autocomplete="Firstname" autofocus>
@@ -26,7 +28,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('surname') }}</label>
+                            <label for="surname" class="col-md-4 col-form-label text-md-right">นามสกุล</label>
 
                             <div class="col-md-6">
                                 <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="name" autofocus>
@@ -40,7 +42,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('phone') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">โทรศัพท์</label>
 
                             <div class="col-md-6">
                                 <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
@@ -56,7 +58,7 @@
                         
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">อีเมล์</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -70,7 +72,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('address') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">ที่อยู่</label>
 
                             <div class="col-md-6">
                                 <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
@@ -84,10 +86,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="district" class="col-md-4 col-form-label text-md-right">{{ __('district') }}</label>
+                            <label for="district" class="col-md-4 col-form-label text-md-right">อำเภอ</label>
 
                             <div class="col-md-6">
-                                <input id="district" type="text" class="form-control @error('district') is-invalid @enderror" name="district" value="{{ old('district') }}" required autocomplete="district" autofocus>
+                                
+                                <select class="form-control  @error('district') is-invalid @enderror" id="district" name="district" required autocomplete="district" autofocus>
+                                    
+                                        @foreach($districts as $district)
+                                        
+                                        <option value="{{$district->district_id}}">{{$district->district_name}}</option>
+                                        @endforeach
+                                        
+                                </select>
 
                                 @error('district')
                                     <span class="invalid-feedback" role="alert">
@@ -96,13 +106,24 @@
                                 @enderror
                             </div>
                         </div>
-
+                        
                         <div class="form-group row">
-                            <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('province') }}</label>
+                            <label for="province" class="col-md-4 col-form-label text-md-right">จังหวัด</label>
 
+                            
                             <div class="col-md-6">
-                                <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province" autofocus>
-
+                                
+                                <select class="form-control  @error('province') is-invalid @enderror" id="province" name="province" required autocomplete="province" autofocus>
+                                        @foreach($provinces as $province)
+                                        <option value="{{$province->province_id}}" >{{$province->province_name}}</option>
+                                        
+                                       
+                                        @endforeach
+                                       
+                                        
+                                        
+                            
+                                    </select>
                                 @error('province')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -112,7 +133,23 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="zipcode" class="col-md-4 col-form-label text-md-right">{{ __('zipcode') }}</label>
+                                <label for="province" class="col-md-4 col-form-label text-md-right">จังหวัด</label>
+    
+                                
+                                <div class="col-md-6">
+                                    
+                                        
+                                    @error('province')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        
+                              
+                        <div class="form-group row">
+                            <label for="zipcode" class="col-md-4 col-form-label text-md-right">รหัสไปรษณีย์</label>
 
                             <div class="col-md-6">
                                 <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode" autofocus>
@@ -156,10 +193,22 @@
                                 </button>
                             </div>
                         </div>
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+ <script>
+        $("#country").select2( {
+         placeholder: "Select Country",
+         allowClear: true
+         } );
+        </script>
+
 @endsection
