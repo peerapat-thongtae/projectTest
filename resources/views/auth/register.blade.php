@@ -87,15 +87,45 @@
                             <label for="district" class="col-md-4 col-form-label text-md-right">{{ __('district') }}</label>
 
                             <div class="col-md-6">
-                                <input id="district" type="text" class="form-control @error('district') is-invalid @enderror" name="district" value="{{ old('district') }}" required autocomplete="district" autofocus>
+                                    <select class="form-control  @error('province') is-invalid @enderror" id="province" name="province" required autocomplete="province" autofocus>
+                                            <option value="" selected>เลือกจังหวัด</option>
+                                        @foreach($provinces as $province)
+                                            <option value="{{$province->province_id}}" >{{$province->province_name}}</option>
+                                            
+                                           
+                                            @endforeach
+                                           
+                                            
+                                            
+                                
+                                        </select>
 
-                                @error('district')
+                                @error('province')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                                <label for="district" class="col-md-4 col-form-label text-md-right">อำเภอ</label>
+    
+                                <div class="col-md-6">
+                                    
+                                    <select class="form-control  @error('district') is-invalid @enderror" id="district" name="district" required autocomplete="district" autofocus>
+                                        
+                                           
+                                            
+                                    </select>
+    
+                                    @error('district')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                         <div class="form-group row">
                             <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('province') }}</label>
@@ -162,4 +192,34 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+  $("select[name=province]").on('change',function(){
+    var province_id = $(this).val();
+    if(province_id) {
+        $.ajax({
+            url: '/api/getDistrict/'+province_id,
+            type:'GET',
+            dataType: 'json',
+            
+            success : function(data){
+
+                console.log(data);
+                $("select[name=district]").empty();
+                $("select[name=district").append
+                    ('<option value="" selected>เลือกอำเภอ</option>');
+                $.each(data,function(key,value){
+                    $("select[name=district").append
+                    ('<option value="'+key+'">'+ value + '</option>');
+                });
+                
+ 
+            }
+        })
+    }
+  });
+});
+    
+</script>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\District;
 use App\Province;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -17,13 +19,22 @@ class UserController extends Controller
         $provinces = Province::All();
         return view('user',compact('users','provinces'));
     }
-
+    
    public function create() {
+        if (Auth::check()) {
        $provinces = Province::All();
-       $districts = District::All();
-       return view('user.createUser',compact('provinces','districts'));
+       
+       return view('user.createUser',compact('provinces'));
+        } else {
+            return view('auth.login');
+        }
    }
 
+   public function getDistrict($id) {
+       $districts = District::Where('province_id' ,$id)->pluck('district_name','district_id');
+       //return response()->json($districts);
+       return $districts->all();
+   }
    public function store(Request $request)
     {
         $province = Province::select('province_name')->Where('province_id',$request->get('province'))->first();

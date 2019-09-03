@@ -21,7 +21,6 @@
     </div>
     <div class="form-group">
         <label for="district_name">อำเภอ</label>
-        
             <input type="text" class="form-control" name="district_name">
     </div>
 

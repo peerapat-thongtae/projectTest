@@ -3,12 +3,12 @@
 
 <div class="container">
         <div class="inline">
-        @if (Auth::check())
         
-    <a href="{{ url('user/create') }}"><button class="btn btn-primary">Add User</button></a> 
+        
+                @if (Auth::check())<a href="{{ url('user/create') }}"><button class="btn btn-primary">Add User</button></a> @endif
     <a href="{{Url('user')}}"><button type="submit" class="btn btn-primary ml-2">ดูทั้งหมด</button></a>
 
-        @endif
+        
         </div>
     <!--<input type="text" id="search" placeholder="  live search"></input>  -->        
     <form action="{{ url('user/search') }}" method="post">
